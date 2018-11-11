@@ -1,40 +1,40 @@
-# js-stellar-sdk
-[![Build Status](https://travis-ci.org/stellar/js-stellar-sdk.svg?branch=master)](https://travis-ci.org/stellar/js-stellar-sdk)
-[![Coverage Status](https://coveralls.io/repos/stellar/js-stellar-sdk/badge.svg?branch=master&service=github)](https://coveralls.io/github/stellar/js-stellar-sdk?branch=master)
-[![Dependency Status](https://david-dm.org/stellar/js-stellar-sdk.svg)](https://david-dm.org/stellar/js-stellar-sdk)
+# js-fonero-sdk
+[![Build Status](https://travis-ci.org/fonero-project/js-fonero-sdk.svg?branch=master)](https://travis-ci.org/fonero-project/js-fonero-sdk)
+[![Coverage Status](https://coveralls.io/repos/fonero-project/js-fonero-sdk/badge.svg?branch=master&service=github)](https://coveralls.io/github/fonero-project/js-fonero-sdk?branch=master)
+[![Dependency Status](https://david-dm.org/fonero-project/js-fonero-sdk.svg)](https://david-dm.org/fonero-project/js-fonero-sdk)
 
 
 
-js-stellar-sdk is a Javascript library for communicating with a [Stellar Horizon server](https://github.com/stellar/go/tree/master/services/horizon). It is used for building Stellar apps either on Node.js or in the browser.
+js-fonero-sdk is a Javascript library for communicating with a [Fonero Horizon server](https://github.com/fonero-project/go/tree/master/services/horizon). It is used for building Fonero apps either on Node.js or in the browser.
 
 It provides:
 - a networking layer API for Horizon endpoints.
-- facilities for building and signing transactions, for communicating with a Stellar Horizon instance, and for submitting transactions or querying network history.
+- facilities for building and signing transactions, for communicating with a Fonero Horizon instance, and for submitting transactions or querying network history.
 
-> **Warning!** Node version of `stellar-base` (`stellar-sdk` dependency) package is using [`ed25519`](https://www.npmjs.com/package/ed25519) package, a native implementation of [Ed25519](https://ed25519.cr.yp.to/) in Node.js, as an [optional dependency](https://docs.npmjs.com/files/package.json#optionaldependencies). This means that if for any reason installation of this package fails, `stellar-base` (and `stellar-sdk`) will fallback to the much slower implementation contained in [`tweetnacl`](https://www.npmjs.com/package/tweetnacl).
+> **Warning!** Node version of `fonero-base` (`fonero-sdk` dependency) package is using [`ed25519`](https://www.npmjs.com/package/ed25519) package, a native implementation of [Ed25519](https://ed25519.cr.yp.to/) in Node.js, as an [optional dependency](https://docs.npmjs.com/files/package.json#optionaldependencies). This means that if for any reason installation of this package fails, `fonero-base` (and `fonero-sdk`) will fallback to the much slower implementation contained in [`tweetnacl`](https://www.npmjs.com/package/tweetnacl).
 >
-> If you are using `stellar-sdk`/`stellar-base` in a browser you can ignore this. However, for production backend deployments you should definitely be using `ed25519`. If `ed25519` is successfully installed and working `StellarSdk.FastSigning` variable will be equal `true`. Otherwise it will be `false`.
+> If you are using `fonero-sdk`/`fonero-base` in a browser you can ignore this. However, for production backend deployments you should definitely be using `ed25519`. If `ed25519` is successfully installed and working `FoneroSdk.FastSigning` variable will be equal `true`. Otherwise it will be `false`.
 
-### js-stellar-sdk vs js-stellar-base
+### js-fonero-sdk vs js-fonero-base
 
-js-stellar-sdk is a high-level library that serves as client side API for [Horizon](https://github.com/stellar/go/tree/master/services/horizon). This library makes extensive use of the lower-level [js-stellar-base](https://github.com/stellar/js-stellar-base) and exposes js-stellar-base classes via its export object.  js-stellar-base can be used as a standalone library for creating Stellar primitive constructs via XDR helpers and wrappers. js-stellar-base doesn't depend on connecting to Horizon.
+js-fonero-sdk is a high-level library that serves as client side API for [Horizon](https://github.com/fonero-project/go/tree/master/services/horizon). This library makes extensive use of the lower-level [js-fonero-base](https://github.com/fonero-project/js-fonero-base) and exposes js-fonero-base classes via its export object.  js-fonero-base can be used as a standalone library for creating Fonero primitive constructs via XDR helpers and wrappers. js-fonero-base doesn't depend on connecting to Horizon.
 
-js-stellar-sdk exposes all js-stellar-base classes so you don't have to install js-stellar-base along js-stellar-sdk.
+js-fonero-sdk exposes all js-fonero-base classes so you don't have to install js-fonero-base along js-fonero-sdk.
 
 ## Quick start
 
-Using npm to include js-stellar-sdk in your own project:
+Using npm to include js-fonero-sdk in your own project:
 ```shell
-npm install --save stellar-sdk
+npm install --save fonero-sdk
 ```
 
-For browsers, [use Bower to install js-stellar-sdk](#to-self-host-for-use-in-the-browser). It exports a
-variable `StellarSdk`. The example below assumes you have `stellar-sdk.js`
+For browsers, [use Bower to install js-fonero-sdk](#to-self-host-for-use-in-the-browser). It exports a
+variable `FoneroSdk`. The example below assumes you have `fonero-sdk.js`
 relative to your html file.
 
 ```html
-<script src="stellar-sdk.js"></script>
-<script>console.log(StellarSdk);</script>
+<script src="fonero-sdk.js"></script>
+<script>console.log(FoneroSdk);</script>
 
 ```
 
@@ -43,23 +43,23 @@ relative to your html file.
 ### To use as a module in a Node.js project
 1. Install it using npm:
   ```shell
-  npm install --save stellar-sdk
+  npm install --save fonero-sdk
   ```
 
 2. require/import it in your JavaScript:
   ```js
-  var StellarSdk = require('stellar-sdk');
+  var FoneroSdk = require('fonero-sdk');
   ```
 
 #### Help! I'm having trouble installing the SDK on Windows
 
-Unfortunately, the Stellar platform development team mostly works on OS X and Linux, and so sometimes bugs creep through that are specific to windows.  When installing stellar-sdk on windows, you might see an error that looks similar to the following:
+Unfortunately, the Fonero platform development team mostly works on OS X and Linux, and so sometimes bugs creep through that are specific to windows.  When installing fonero-sdk on windows, you might see an error that looks similar to the following:
 
 ```shell
 error MSB8020: The build tools for v120 (Platform Toolset = 'v120 ') cannot be found. To build using the v120 build tools, please install v120 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution"
 ```
 
-To resolve this issue, you should upgrade your version of nodejs, node-gyp and then re-attempt to install the offending package using `npm install -g --msvs_version=2015 ed25519`.  Afterwards, retry installing stellar-sdk as normal.
+To resolve this issue, you should upgrade your version of nodejs, node-gyp and then re-attempt to install the offending package using `npm install -g --msvs_version=2015 ed25519`.  Afterwards, retry installing fonero-sdk as normal.
 
 If you encounter the error: "failed to find C:\OpenSSL-Win64", You need to install OpenSSL. More information about this issue can be found [here](https://github.com/nodejs/node-gyp/wiki/Linking-to-OpenSSL).
 
@@ -69,46 +69,46 @@ In the event the above does not work, please join us on our community slack to g
 1. Install it using [bower](http://bower.io):
 
   ```shell
-  bower install stellar-sdk
+  bower install fonero-sdk
   ```
 
 2. Include it in the browser:
 
   ```html
-  <script src="./bower_components/stellar-sdk/stellar-sdk.js"></script>
-  <script>console.log(StellarSdk);</script>
+  <script src="./bower_components/fonero-sdk/fonero-sdk.js"></script>
+  <script>console.log(FoneroSdk);</script>
   ```
 
-If you don't want to use install Bower, you can copy built JS files from the [bower-js-stellar-sdk repo](https://github.com/stellar/bower-js-stellar-sdk).
+If you don't want to use install Bower, you can copy built JS files from the [bower-js-fonero-sdk repo](https://github.com/fonero-project/bower-js-fonero-sdk).
 
-### To use the [cdnjs](https://cdnjs.com/libraries/stellar-sdk) hosted script in the browser
-1. Instruct the browser to fetch the library from [cdnjs](https://cdnjs.com/libraries/stellar-sdk), a 3rd party service that hosts js libraries:
+### To use the [cdnjs](https://cdnjs.com/libraries/fonero-sdk) hosted script in the browser
+1. Instruct the browser to fetch the library from [cdnjs](https://cdnjs.com/libraries/fonero-sdk), a 3rd party service that hosts js libraries:
 
   ```html
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/{version}/stellar-sdk.js"></script>
-  <script>console.log(StellarSdk);</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fonero-sdk/{version}/fonero-sdk.js"></script>
+  <script>console.log(FoneroSdk);</script>
   ```
 
 Note that this method relies using a third party to host the JS library. This may not be entirely secure.
 
-Make sure that you are using the latest version number. They can be found on the [releases page in Github](https://github.com/stellar/js-stellar-sdk/releases).
+Make sure that you are using the latest version number. They can be found on the [releases page in Github](https://github.com/fonero-project/js-fonero-sdk/releases).
 
-### To develop and test js-stellar-sdk itself
+### To develop and test js-fonero-sdk itself
 1. Clone the repo:
   ```shell
-  git clone https://github.com/stellar/js-stellar-sdk.git
+  git clone https://github.com/fonero-project/js-fonero-sdk.git
   ```
 
-2. Install dependencies inside js-stellar-sdk folder:
+2. Install dependencies inside js-fonero-sdk folder:
   ```shell
-  cd js-stellar-sdk
+  cd js-fonero-sdk
   npm install
   ```
 
 ## Usage
-For information on how to use js-stellar-sdk, take a look at the [Developers site](https://www.stellar.org/developers/js-stellar-sdk/reference/).
+For information on how to use js-fonero-sdk, take a look at the [Developers site](https://www.fonero.org/developers/js-fonero-sdk/reference/).
 
-There is also API Documentation [here](https://www.stellar.org/developers/reference/).
+There is also API Documentation [here](https://www.fonero.org/developers/reference/).
 
 ## Testing
 To run all tests:
@@ -123,10 +123,10 @@ gulp test:browser
 ```
 
 ## Documentation
-Documentation for this repo lives in [Developers site](https://www.stellar.org/developers/js-stellar-sdk/learn/index.html).
+Documentation for this repo lives in [Developers site](https://www.fonero.org/developers/js-fonero-sdk/learn/index.html).
 
 ## Contributing
-For information on how to contribute, please refer to our [contribution guide](https://github.com/stellar/js-stellar-sdk/blob/master/CONTRIBUTING.md).
+For information on how to contribute, please refer to our [contribution guide](https://github.com/fonero-project/js-fonero-sdk/blob/master/CONTRIBUTING.md).
 
 ## Publishing to npm
 ```
@@ -138,4 +138,4 @@ npm >=2.13.0 required.
 Read more about [npm version](https://docs.npmjs.com/cli/version).
 
 ## License
-js-stellar-sdk is licensed under an Apache-2.0 license. See the [LICENSE](https://github.com/stellar/js-stellar-sdk/blob/master/LICENSE) file for details.
+js-fonero-sdk is licensed under an Apache-2.0 license. See the [LICENSE](https://github.com/fonero-project/js-fonero-sdk/blob/master/LICENSE) file for details.

@@ -1,7 +1,7 @@
 import clone from 'lodash/clone';
 
 let defaultConfig = {
-  allowHttp: false,
+  allowHttp: true,
   timeout: 0
 };
 
@@ -12,15 +12,15 @@ let config = clone(defaultConfig);
  *
  * Usage node:
  * ```
- * import {Config} from 'stellar-sdk';
+ * import {Config} from 'fonero-sdk';
  * Config.setAllowHttp(true);
  * Config.setTimeout(5000);
  * ```
  *
  * Usage browser:
  * ```
- * StellarSdk.Config.setAllowHttp(true);
- * StellarSdk.Config.setTimeout(5000);
+ * FoneroSdk.Config.setAllowHttp(true);
+ * FoneroSdk.Config.setTimeout(5000);
  * ```
  * @static
  */

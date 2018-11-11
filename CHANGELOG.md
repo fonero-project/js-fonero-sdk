@@ -4,25 +4,25 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ## 0.11.0
 
-* Update `js-xdr` (by updating `stellar-base`) to support unmarshaling non-utf8 strings.
-* String fields returned by `Operation.fromXDRObject()` are of type `Buffer` now (except `SetOptions.home_domain` and `ManageData.name` - both required to be ASCII by stellar-core).
+* Update `js-xdr` (by updating `fonero-base`) to support unmarshaling non-utf8 strings.
+* String fields returned by `Operation.fromXDRObject()` are of type `Buffer` now (except `SetOptions.home_domain` and `ManageData.name` - both required to be ASCII by fonero-core).
 * Add `offset` parameter to TradeAggregationCallBuilder to reflect new changes to the endpoint in horizon-0.15.0
 
 ## 0.10.3
 
-* Update `stellar-base` and xdr files.
+* Update `fonero-base` and xdr files.
 
 ## 0.10.2
 
-* Update `stellar-base` (and `js-xdr`).
+* Update `fonero-base` (and `js-xdr`).
 
 ## 0.10.1
 
-* Update `stellar-base` to `0.8.1`.
+* Update `fonero-base` to `0.8.1`.
 
 ## 0.10.0
 
-* Update `stellar-base` to `0.8.0` with `bump_sequence` support.
+* Update `fonero-base` to `0.8.0` with `bump_sequence` support.
 
 ## 0.9.2
 
@@ -32,15 +32,15 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ### Breaking changes
 
-* `stellar-sdk` is now using native `Promise` instead of `bluebird`. The `catch` function is different. Instead of:
+* `fonero-sdk` is now using native `Promise` instead of `bluebird`. The `catch` function is different. Instead of:
 
   ```js
-  .catch(StellarSdk.NotFoundError, function (err) { /* ... */ })
+  .catch(FoneroSdk.NotFoundError, function (err) { /* ... */ })
   ```
   please use the following snippet:
   ```js
   .catch(function (err) {
-    if (err instanceof StellarSdk.NotFoundError) { /* ... */ }
+    if (err instanceof FoneroSdk.NotFoundError) { /* ... */ }
   })
   ```
 
@@ -53,8 +53,8 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ## 0.8.2
 
-* Added `timeout` option to `StellarTomlResolver` and `FederationServer` calls (https://github.com/stellar/js-stellar-sdk/issues/158).
-* Fixed adding random value to URLs multiple times (https://github.com/stellar/js-stellar-sdk/issues/169).
+* Added `timeout` option to `FoneroTomlResolver` and `FederationServer` calls (https://github.com/fonero-project/js-fonero-sdk/issues/158).
+* Fixed adding random value to URLs multiple times (https://github.com/fonero-project/js-fonero-sdk/issues/169).
 * Fixed jsdoc for classes that extend `CallBuilder`.
 * Updated dependencies.
 * Added `yarn.lock` file to repository.
@@ -73,7 +73,7 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ## 0.7.3
 
-* Upgrade `stellar-base`.
+* Upgrade `fonero-base`.
 
 ## 0.7.2
 
@@ -81,7 +81,7 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ## 0.7.1
 
-* Upgrade `stellar-base`.
+* Upgrade `fonero-base`.
 
 ## 0.7.0
 
@@ -97,7 +97,7 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 
 ## 0.6.2
 
-* Updated `stellar.toml` location
+* Updated `fonero.toml` location
 
 ## 0.6.1
 
@@ -107,11 +107,11 @@ As this project is pre 1.0, breaking changes may happen for minor version bumps.
 ## 0.6.0
 
 * **Breaking change** `CallBuilder.stream` now reconnects when no data was received for a long time.
-This is to prevent permanent disconnects (more in: [#76](https://github.com/stellar/js-stellar-sdk/pull/76)).
+This is to prevent permanent disconnects (more in: [#76](https://github.com/fonero-project/js-fonero-sdk/pull/76)).
 Also, this method now returns `close` callback instead of `EventSource` object.
 * **Breaking change** `Server.loadAccount` now returns the `AccountResponse` object.
-* **Breaking change** Upgraded `stellar-base` to `0.6.0`. `ed25519` package is now an optional dependency. Check `StellarSdk.FastSigning` variable to check if `ed25519` package is available. More in README file.
-* New `StellarTomlResolver` class that allows getting `stellar.toml` file for a domain.
+* **Breaking change** Upgraded `fonero-base` to `0.6.0`. `ed25519` package is now an optional dependency. Check `FoneroSdk.FastSigning` variable to check if `ed25519` package is available. More in README file.
+* New `FoneroTomlResolver` class that allows getting `fonero.toml` file for a domain.
 * New `Config` class to set global config values.
 
 ## 0.5.1
@@ -127,7 +127,7 @@ Also, this method now returns `close` callback instead of `EventSource` object.
 
 ## 0.4.3
 
-* Updated dependency (`stellar-base`).
+* Updated dependency (`fonero-base`).
 
 ## 0.4.2
 
@@ -137,8 +137,8 @@ Also, this method now returns `close` callback instead of `EventSource` object.
 
 ## 0.4.1
 
-* `stellar-base` bump. (c90c68f)
+* `fonero-base` bump. (c90c68f)
 
 ## 0.4.0
 
-* **Breaking change** Bumped `stellar-base` to [0.5.0](https://github.com/stellar/js-stellar-base/blob/master/CHANGELOG.md#050). (b810aef)
+* **Breaking change** Bumped `fonero-base` to [0.5.0](https://github.com/fonero-project/js-fonero-base/blob/master/CHANGELOG.md#050). (b810aef)

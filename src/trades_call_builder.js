@@ -7,7 +7,7 @@ import {CallBuilder} from "./call_builder";
  * @class TradesCallBuilder
  * @extends CallBuilder
  * @constructor
- * @see [Trades](https://www.stellar.org/developers/horizon/reference/endpoints/trades.html)
+ * @see [Trades](https://www.fonero.org/developers/horizon/reference/endpoints/trades.html)
  * @param {string} serverUrl serverUrl Horizon server URL.
  */
 export class TradesCallBuilder extends CallBuilder {
@@ -52,7 +52,7 @@ export class TradesCallBuilder extends CallBuilder {
 
     /**
      * Filter trades for a specific account
-     * @see [Trades for Account](https://www.stellar.org/developers/horizon/reference/trades-for-account.html)
+     * @see [Trades for Account](https://www.fonero.org/developers/horizon/reference/trades-for-account.html)
      * @param {string} accountId For example: `GBYTR4MC5JAX4ALGUBJD7EIKZVM7CUGWKXIUJMRSMK573XH2O7VAK3SR`
      * @returns {TradesCallBuilder}
      */

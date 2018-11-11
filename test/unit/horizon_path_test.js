@@ -2,8 +2,8 @@ describe("horizon path tests", function () {
 
   beforeEach(function () {
     this.axiosMock = sinon.mock(axios);
-    StellarSdk.Config.setDefault();
-    StellarSdk.Network.useTestNetwork();
+    FoneroSdk.Config.setDefault();
+    FoneroSdk.Network.useTestNetwork();
   });
 
   afterEach(function () {
@@ -13,7 +13,7 @@ describe("horizon path tests", function () {
 
   function test_horizon_paths(serverUrl) {
 
-    let server = new StellarSdk.Server(serverUrl);
+    let server = new FoneroSdk.Server(serverUrl);
 
     let randomResult = {
       data: {
@@ -58,13 +58,13 @@ describe("horizon path tests", function () {
     it("server.submitTransaction() " + serverUrl, function (done) {
       randomResult.endpoint = "post";
 
-      let keypair = StellarSdk.Keypair.random();
-      let account = new StellarSdk.Account(keypair.publicKey(), "56199647068161");
+      let keypair = FoneroSdk.Keypair.random();
+      let account = new FoneroSdk.Account(keypair.publicKey(), "56199647068161");
       
-      let fakeTransaction = new StellarSdk.TransactionBuilder(account)
-        .addOperation(StellarSdk.Operation.payment({
+      let fakeTransaction = new FoneroSdk.TransactionBuilder(account)
+        .addOperation(FoneroSdk.Operation.payment({
           destination: keypair.publicKey(),
-          asset: StellarSdk.Asset.native(),
+          asset: FoneroSdk.Asset.native(),
           amount: "100.50"
         }))
         .build();
@@ -83,13 +83,13 @@ describe("horizon path tests", function () {
   let serverUrls = [];
 
   //server url without folder path.
-  serverUrls.push("https://acme.com:1337");
+  serverUrls.push("https://horizon.trade.fonero.org");
 
   //server url folder path.
-  serverUrls.push("https://acme.com:1337/folder");
+  serverUrls.push("https://horizon.trade.fonero.org/folder");
 
   //server url folder and subfolder path.
-  serverUrls.push("https://acme.com:1337/folder/subfolder");
+  serverUrls.push("https://horizon.trade.fonero.org/folder/subfolder");
 
   for (var index = 0; index < serverUrls.length; index++) {
     var serverUrl = serverUrls[index];

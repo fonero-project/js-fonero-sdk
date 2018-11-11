@@ -3,9 +3,9 @@ import { Config } from "../../src/config";
 
 describe("federation-server.js tests", function () {
   beforeEach(function () {
-    this.server = new StellarSdk.FederationServer('https://acme.com:1337/federation', 'stellar.org');
+    this.server = new FoneroSdk.FederationServer('https://acme.com:1337/federation', 'fonero.org');
     this.axiosMock = sinon.mock(axios);
-    StellarSdk.Config.setDefault();
+    FoneroSdk.Config.setDefault();
   });
 
   afterEach(function () {
@@ -15,35 +15,35 @@ describe("federation-server.js tests", function () {
 
   describe('FederationServer.constructor', function () {
     it("throws error for insecure server", function () {
-      expect(() => new StellarSdk.FederationServer('http://acme.com:1337/federation', 'stellar.org')).to.throw(/Cannot connect to insecure federation server/);
+      expect(() => new FoneroSdk.FederationServer('http://acme.com:1337/federation', 'fonero.org')).to.throw(/Cannot connect to insecure federation server/);
     });
 
     it("allow insecure server when opts.allowHttp flag is set", function () {
-      expect(() => new StellarSdk.FederationServer('http://acme.com:1337/federation', 'stellar.org', {allowHttp: true})).to.not.throw();
+      expect(() => new FoneroSdk.FederationServer('http://acme.com:1337/federation', 'fonero.org', {allowHttp: true})).to.not.throw();
     });
 
     it("allow insecure server when global Config.allowHttp flag is set", function () {
-      StellarSdk.Config.setAllowHttp(true);
-      expect(() => new StellarSdk.FederationServer('http://acme.com:1337/federation', 'stellar.org', {allowHttp: true})).to.not.throw();
+      FoneroSdk.Config.setAllowHttp(true);
+      expect(() => new FoneroSdk.FederationServer('http://acme.com:1337/federation', 'fonero.org', {allowHttp: true})).to.not.throw();
     });
   });
 
   describe('FederationServer.resolveAddress', function () {
     beforeEach(function () {
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://acme.com:1337/federation?type=name&q=bob%2Astellar.org'))
+        .withArgs(sinon.match('https://acme.com:1337/federation?type=name&q=bob%2Afonero.org'))
         .returns(Promise.resolve({
           data: {
-            stellar_address: 'bob*stellar.org',
+            fonero_address: 'bob*fonero.org',
             account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS'
           }
         }));
     });
 
     it("requests is correct", function (done) {
-      this.server.resolveAddress('bob*stellar.org')
+      this.server.resolveAddress('bob*fonero.org')
         .then(response => {
-          expect(response.stellar_address).equals('bob*stellar.org');
+          expect(response.fonero_address).equals('bob*fonero.org');
           expect(response.account_id).equals('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS');
           done();
         })
@@ -52,10 +52,10 @@ describe("federation-server.js tests", function () {
         });
     });
 
-    it("requests is correct for username as stellar address", function (done) {
+    it("requests is correct for username as fonero address", function (done) {
       this.server.resolveAddress('bob')
         .then(response => {
-          expect(response.stellar_address).equals('bob*stellar.org');
+          expect(response.fonero_address).equals('bob*fonero.org');
           expect(response.account_id).equals('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS');
           done();
         })
@@ -71,7 +71,7 @@ describe("federation-server.js tests", function () {
         .withArgs(sinon.match('https://acme.com:1337/federation?type=id&q=GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS'))
         .returns(Promise.resolve({
           data: {
-            stellar_address: 'bob*stellar.org',
+            fonero_address: 'bob*fonero.org',
             account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS'
           }
         }));
@@ -80,7 +80,7 @@ describe("federation-server.js tests", function () {
     it("requests is correct", function (done) {
       this.server.resolveAccountId('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS')
         .then(response => {
-          expect(response.stellar_address).equals('bob*stellar.org');
+          expect(response.fonero_address).equals('bob*fonero.org');
           expect(response.account_id).equals('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS');
           done();
         })
@@ -96,7 +96,7 @@ describe("federation-server.js tests", function () {
         .withArgs(sinon.match('https://acme.com:1337/federation?type=txid&q=3389e9f0f1a65f19736cacf544c2e825313e8447f569233bb8db39aa607c8889'))
         .returns(Promise.resolve({
           data: {
-            stellar_address: 'bob*stellar.org',
+            fonero_address: 'bob*fonero.org',
             account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS'
           }
         }));
@@ -105,7 +105,7 @@ describe("federation-server.js tests", function () {
     it("requests is correct", function (done) {
       this.server.resolveTransactionId('3389e9f0f1a65f19736cacf544c2e825313e8447f569233bb8db39aa607c8889')
         .then(response => {
-          expect(response.stellar_address).equals('bob*stellar.org');
+          expect(response.fonero_address).equals('bob*fonero.org');
           expect(response.account_id).equals('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS');
           done();
         })
@@ -118,72 +118,72 @@ describe("federation-server.js tests", function () {
   describe('FederationServer.createForDomain', function () {
     it("creates correct object", function (done) {
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://acme.com/.well-known/stellar.toml'))
+        .withArgs(sinon.match('https://acme.com/.well-known/fonero.toml'))
         .returns(Promise.resolve({
           data: `
-#   The endpoint which clients should query to resolve stellar addresses
+#   The endpoint which clients should query to resolve fonero addresses
 #   for users on your domain.
-FEDERATION_SERVER="https://api.stellar.org/federation"
+FEDERATION_SERVER="https://api.trade.fonero.org/federation"
 `
         }));
 
-      StellarSdk.FederationServer.createForDomain('acme.com')
+      FoneroSdk.FederationServer.createForDomain('acme.com')
         .then(federationServer => {
           expect(federationServer.serverURL.protocol()).equals('https');
-          expect(federationServer.serverURL.hostname()).equals('api.stellar.org');
+          expect(federationServer.serverURL.hostname()).equals('api.trade.fonero.org');
           expect(federationServer.serverURL.path()).equals('/federation');
           expect(federationServer.domain).equals('acme.com');
           done();
         });
     });
 
-    it("fails when stellar.toml does not contain federation server info", function (done) {
+    it("fails when fonero.toml does not contain federation server info", function (done) {
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://acme.com/.well-known/stellar.toml'))
+        .withArgs(sinon.match('https://acme.com/.well-known/fonero.toml'))
         .returns(Promise.resolve({
           data: ''
         }));
 
-      StellarSdk.FederationServer.createForDomain('acme.com').should.be.rejectedWith(/stellar.toml does not contain FEDERATION_SERVER field/).and.notify(done);
+      FoneroSdk.FederationServer.createForDomain('acme.com').should.be.rejectedWith(/fonero.toml does not contain FEDERATION_SERVER field/).and.notify(done);
     });
   });
 
   describe('FederationServer.resolve', function () {
     it("succeeds for a valid account ID", function (done) {
-      StellarSdk.FederationServer.resolve('GAFSZ3VPBC2H2DVKCEWLN3PQWZW6BVDMFROWJUDAJ3KWSOKQIJ4R5W4J')
+      FoneroSdk.FederationServer.resolve('GAFSZ3VPBC2H2DVKCEWLN3PQWZW6BVDMFROWJUDAJ3KWSOKQIJ4R5W4J')
         .should.eventually.deep.equal({account_id: 'GAFSZ3VPBC2H2DVKCEWLN3PQWZW6BVDMFROWJUDAJ3KWSOKQIJ4R5W4J'})
         .notify(done);
     });
 
     it("fails for invalid account ID", function (done) {
-      StellarSdk.FederationServer.resolve('invalid').should.be.rejectedWith(/Invalid Account ID/).notify(done);
+      FoneroSdk.FederationServer.resolve('invalid').should.be.rejectedWith(/Invalid Account ID/).notify(done);
     });
 
-    it("succeeds for a valid Stellar address", function (done) {
+    it("succeeds for a valid Fonero address", function (done) {
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://stellar.org/.well-known/stellar.toml'))
+        .withArgs(sinon.match('https://fonero.org/.well-known/fonero.toml'))
         .returns(Promise.resolve({
           data: `
-#   The endpoint which clients should query to resolve stellar addresses
+#   The endpoint which clients should query to resolve fonero addresses
 #   for users on your domain.
-FEDERATION_SERVER="https://api.stellar.org/federation"
+FEDERATION_SERVER="https://api.trade.fonero.org/federation"
 `
         }));
 
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://api.stellar.org/federation?type=name&q=bob%2Astellar.org'))
+        .withArgs(sinon.match('https://api.trade.fonero.org/federation?type=name&q=bob%2Afonero.org'))
         .returns(Promise.resolve({
           data: {
-            stellar_address: 'bob*stellar.org',
+            fonero_address: 'bob*fonero.org',
             account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS',
             memo_type: 'id',
             memo: '100'
           }
         }));
 
-      StellarSdk.FederationServer.resolve('bob*stellar.org')
+      FoneroSdk.FederationServer.resolve('bob*fonero.org')
         .should.eventually.deep.equal({
-          stellar_address: 'bob*stellar.org',
+          fonero_address: 'bob*fonero.org',
           account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS',
           memo_type: 'id',
           memo: '100'
@@ -191,23 +191,23 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         .notify(done);
     });
 
-    it("fails for invalid Stellar address", function (done) {
-      StellarSdk.FederationServer.resolve('bob*stellar.org*test').should.be.rejectedWith(/Invalid Stellar address/).notify(done);
+    it("fails for invalid Fonero address", function (done) {
+      FoneroSdk.FederationServer.resolve('bob*fonero.org*test').should.be.rejectedWith(/Invalid Fonero address/).notify(done);
     });
 
     it("fails when memo is not string", function (done) {
       this.axiosMock.expects('get')
-        .withArgs(sinon.match('https://acme.com:1337/federation?type=name&q=bob%2Astellar.org'))
+        .withArgs(sinon.match('https://acme.com:1337/federation?type=name&q=bob%2Afonero.org'))
         .returns(Promise.resolve({
           data: {
-            stellar_address: 'bob*stellar.org',
+            fonero_address: 'bob*fonero.org',
             account_id: 'GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS',
             memo_type: 'id',
             memo: 100
           }
         }));
 
-      this.server.resolveAddress('bob*stellar.org')
+      this.server.resolveAddress('bob*fonero.org')
         .should.be.rejectedWith(/memo value should be of type string/).notify(done);
     });
 
@@ -216,13 +216,13 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
       if (typeof window != 'undefined') {
         return done();
       }
-      var response = Array(StellarSdk.FEDERATION_RESPONSE_MAX_SIZE+10).join('a');
+      var response = Array(FoneroSdk.FEDERATION_RESPONSE_MAX_SIZE+10).join('a');
       let tempServer = http.createServer((req, res) => {
         res.setHeader('Content-Type', 'application/json; charset=UTF-8');
         res.end(response);
       }).listen(4444, () => {
-        new StellarSdk.FederationServer('http://localhost:4444/federation', 'stellar.org', {allowHttp: true})
-          .resolveAddress('bob*stellar.org')
+        new FoneroSdk.FederationServer('http://localhost:4444/federation', 'fonero.org', {allowHttp: true})
+          .resolveAddress('bob*fonero.org')
           .should.be.rejectedWith(/federation response exceeds allowed size of [0-9]+/)
           .notify(done)
           .then(() => tempServer.close());
@@ -256,8 +256,8 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         let tempServer = http.createServer((req, res) => {
           setTimeout(() => {}, 10000);
         }).listen(4444, () => {
-          new StellarSdk.FederationServer('http://localhost:4444/federation', 'stellar.org', opts)
-            .resolveAddress('bob*stellar.org')
+          new FoneroSdk.FederationServer('http://localhost:4444/federation', 'fonero.org', opts)
+            .resolveAddress('bob*fonero.org')
             .should.be.rejectedWith(/timeout of 1000ms exceeded/)
             .notify(done)
             .then(() => tempServer.close());
@@ -272,7 +272,7 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         let tempServer = http.createServer((req, res) => {
           setTimeout(() => {}, 10000);
         }).listen(4444, () => {
-          new StellarSdk.FederationServer('http://localhost:4444/federation', 'stellar.org', opts)
+          new FoneroSdk.FederationServer('http://localhost:4444/federation', 'fonero.org', opts)
             .resolveAccountId('GB5XVAABEQMY63WTHDQ5RXADGYF345VWMNPTN2GFUDZT57D57ZQTJ7PS')
             .should.be.rejectedWith(/timeout of 1000ms exceeded/)
             .notify(done)
@@ -288,7 +288,7 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         let tempServer = http.createServer((req, res) => {
           setTimeout(() => {}, 10000);
         }).listen(4444, () => {
-          new StellarSdk.FederationServer('http://localhost:4444/federation', 'stellar.org', opts)
+          new FoneroSdk.FederationServer('http://localhost:4444/federation', 'fonero.org', opts)
             .resolveTransactionId('3389e9f0f1a65f19736cacf544c2e825313e8447f569233bb8db39aa607c8889')
             .should.be.rejectedWith(/timeout of 1000ms exceeded/)
             .notify(done)
@@ -304,7 +304,7 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         let tempServer = http.createServer((req, res) => {
           setTimeout(() => {}, 10000);
         }).listen(4444, () => {
-          StellarSdk.FederationServer
+          FoneroSdk.FederationServer
             .createForDomain("localhost:4444", opts)
             .should.be.rejectedWith(/timeout of 1000ms exceeded/)
             .notify(done)
@@ -321,7 +321,7 @@ FEDERATION_SERVER="https://api.stellar.org/federation"
         let tempServer = http.createServer((req, res) => {
           setTimeout(() => {}, 10000);
         }).listen(4444, () => {
-          StellarSdk.FederationServer
+          FoneroSdk.FederationServer
             .resolve('bob*localhost:4444', opts)
             .should.eventually.be.rejectedWith(/timeout of 1000ms exceeded/)
             .notify(done)

@@ -4,7 +4,7 @@ module.exports = function(config) {
     browsers : ["Firefox"],
 
     files: [
-      'dist/stellar-sdk.js',
+      'dist/fonero-sdk.js',
       'test/test-helper.js',
       'test/unit/**/*.js'
     ],
